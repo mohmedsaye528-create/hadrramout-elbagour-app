@@ -1,0 +1,6 @@
+{
+  "name": "مطعم حضرموت الباجور | Hadramout El-Bagour",
+  "description": "مطعم حضرموت الباجور للمأكولات الشرقية والمشويات والمندي والوجبات العائلية والعزومات في مدينة الباجور، المنوفية.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

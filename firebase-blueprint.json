@@ -1,0 +1,664 @@
+{
+  "entities": {
+    "MenuItem": {
+      "title": "MenuItem",
+      "description": "A dish or menu item offered by Hadramout El-Bagour Restaurant.",
+      "type": "object",
+      "properties": {
+        "nameAr": {
+          "type": "string",
+          "description": "Arabic name of the dish",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "nameEn": {
+          "type": "string",
+          "description": "English name of the dish",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "descriptionAr": {
+          "type": "string",
+          "description": "Arabic short description",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "descriptionEn": {
+          "type": "string",
+          "description": "English short description",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "categoryId": {
+          "type": "string",
+          "description": "Category identifier",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "price": {
+          "type": "number",
+          "description": "Price in EGP (0 indicates price determined upon request / configurable via Admin)"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL or asset path of the dish image",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "isVisible": {
+          "type": "boolean",
+          "description": "Whether the product is currently visible on the public menu"
+        },
+        "isFeatured": {
+          "type": "boolean",
+          "description": "Admin-controlled featured badge"
+        },
+        "isPopular": {
+          "type": "boolean",
+          "description": "Admin-controlled most popular badge"
+        },
+        "isNew": {
+          "type": "boolean",
+          "description": "Admin-controlled new item badge"
+        },
+        "isSpecialOffer": {
+          "type": "boolean",
+          "description": "Admin-controlled special offer badge"
+        },
+        "sortOrder": {
+          "type": "number",
+          "description": "Display sort order"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp"
+        }
+      },
+      "required": [
+        "nameAr",
+        "nameEn",
+        "descriptionAr",
+        "descriptionEn",
+        "categoryId",
+        "price",
+        "imageUrl",
+        "isVisible",
+        "isFeatured",
+        "isPopular",
+        "isNew",
+        "isSpecialOffer",
+        "sortOrder",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Main menu category for Hadramout El-Bagour.",
+      "type": "object",
+      "properties": {
+        "nameAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "nameEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "descriptionAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "descriptionEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "imageUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "iconName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "sortOrder": {
+          "type": "number"
+        },
+        "isVisible": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "nameAr",
+        "nameEn",
+        "descriptionAr",
+        "descriptionEn",
+        "imageUrl",
+        "iconName",
+        "sortOrder",
+        "isVisible",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer food order containing PII, isolated from public reads.",
+      "type": "object",
+      "properties": {
+        "orderNumber": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9\\-]+$"
+        },
+        "customerName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "customerPhone": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 20,
+          "pattern": "^[0-9+\\-\\s()]+$"
+        },
+        "customerAddress": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 300
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "deliveryMethod": {
+          "type": "string",
+          "enum": ["pickup", "delivery"]
+        },
+        "paymentMethod": {
+          "type": "string",
+          "enum": ["cod"]
+        },
+        "items": {
+          "type": "array",
+          "description": "Bounded list of formatted order item strings (max 25)"
+        },
+        "totalAmount": {
+          "type": "number"
+        },
+        "hasUnpricedItems": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "confirmed", "preparing", "ready", "delivered", "cancelled"]
+        },
+        "customerUid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "orderNumber",
+        "customerName",
+        "customerPhone",
+        "customerAddress",
+        "notes",
+        "deliveryMethod",
+        "paymentMethod",
+        "items",
+        "totalAmount",
+        "hasUnpricedItems",
+        "status",
+        "customerUid",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "OrderTracking": {
+      "title": "OrderTracking",
+      "description": "Publicly queryable order status document stripped of customer PII.",
+      "type": "object",
+      "properties": {
+        "orderNumber": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9\\-]+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "confirmed", "preparing", "ready", "delivered", "cancelled"]
+        },
+        "deliveryMethod": {
+          "type": "string",
+          "enum": ["pickup", "delivery"]
+        },
+        "totalAmount": {
+          "type": "number"
+        },
+        "hasUnpricedItems": {
+          "type": "boolean"
+        },
+        "itemCount": {
+          "type": "number"
+        },
+        "itemsSummaryAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "itemsSummaryEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "orderNumber",
+        "status",
+        "deliveryMethod",
+        "totalAmount",
+        "hasUnpricedItems",
+        "itemCount",
+        "itemsSummaryAr",
+        "itemsSummaryEn",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Reservation": {
+      "title": "Reservation",
+      "description": "Table reservation request containing customer PII.",
+      "type": "object",
+      "properties": {
+        "reservationNumber": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9\\-]+$"
+        },
+        "customerName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "customerPhone": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 20,
+          "pattern": "^[0-9+\\-\\s()]+$"
+        },
+        "guests": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 20,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "time": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 20
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "confirmed", "completed", "cancelled"]
+        },
+        "customerUid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "reservationNumber",
+        "customerName",
+        "customerPhone",
+        "guests",
+        "date",
+        "time",
+        "notes",
+        "status",
+        "customerUid",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer review moderated by restaurant administration.",
+      "type": "object",
+      "properties": {
+        "authorName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "rating": {
+          "type": "number"
+        },
+        "comment": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 600
+        },
+        "isApproved": {
+          "type": "boolean"
+        },
+        "authorUid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "authorName",
+        "rating",
+        "comment",
+        "isApproved",
+        "authorUid",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GalleryItem": {
+      "title": "GalleryItem",
+      "description": "Photo gallery item for dishes and restaurant ambiance.",
+      "type": "object",
+      "properties": {
+        "titleAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "titleEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "category": {
+          "type": "string",
+          "enum": ["dishes", "grills", "mandi", "ambiance", "family"]
+        },
+        "imageUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "isPlaceholder": {
+          "type": "boolean"
+        },
+        "isVisible": {
+          "type": "boolean"
+        },
+        "sortOrder": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "titleAr",
+        "titleEn",
+        "category",
+        "imageUrl",
+        "isPlaceholder",
+        "isVisible",
+        "sortOrder",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "RestaurantSettings": {
+      "title": "RestaurantSettings",
+      "description": "Editable site content and contact configuration for Hadramout El-Bagour.",
+      "type": "object",
+      "properties": {
+        "heroTitleAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 150
+        },
+        "heroTitleEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 150
+        },
+        "heroSubtitleAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "heroSubtitleEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "heroDescAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "heroDescEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "aboutTextAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1500
+        },
+        "aboutTextEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1500
+        },
+        "banquetTextAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "banquetTextEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 30
+        },
+        "whatsapp": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 30
+        },
+        "addressAr": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 300
+        },
+        "addressEn": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 300
+        },
+        "priceRangeNoteAr": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "priceRangeNoteEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "facebookUrl": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 300
+        },
+        "instagramUrl": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 300
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "heroTitleAr",
+        "heroTitleEn",
+        "heroSubtitleAr",
+        "heroSubtitleEn",
+        "heroDescAr",
+        "heroDescEn",
+        "aboutTextAr",
+        "aboutTextEn",
+        "banquetTextAr",
+        "banquetTextEn",
+        "phone",
+        "whatsapp",
+        "addressAr",
+        "addressEn",
+        "priceRangeNoteAr",
+        "priceRangeNoteEn",
+        "facebookUrl",
+        "instagramUrl",
+        "updatedAt"
+      ]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized restaurant administrator record.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 150
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["email", "role", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/menuItems/{itemId}": {
+      "schema": { "$ref": "#/entities/MenuItem" },
+      "description": "Menu products and dishes managed by admin and viewed by customers."
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Menu categories managed by admin and viewed by customers."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders containing PII, accessible only to the order creator or admin."
+    },
+    "/orderTracking/{orderId}": {
+      "schema": { "$ref": "#/entities/OrderTracking" },
+      "description": "Split-collection public tracking state without customer PII."
+    },
+    "/reservations/{reservationId}": {
+      "schema": { "$ref": "#/entities/Reservation" },
+      "description": "Table reservations containing PII, accessible only to the creator or admin."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer reviews moderated by admin."
+    },
+    "/gallery/{imageId}": {
+      "schema": { "$ref": "#/entities/GalleryItem" },
+      "description": "Gallery images managed by admin."
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/RestaurantSettings" },
+      "description": "Global restaurant content and contact settings."
+    },
+    "/admins/{adminUid}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Admin role lookup collection."
+    }
+  }
+}
